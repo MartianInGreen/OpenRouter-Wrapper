@@ -609,8 +609,8 @@
             "context_length": 200000,
             "created": 1718841600,
             "description": "Claude 3.5 Sonnet delivers better-than-Opus capabilities, faster-than-Sonnet speeds, at the same Sonnet prices. Sonnet is particularly good at:\n\n- Coding: Autonomously writes, edits, and runs code with reasoning and troubleshooting\n- Data science: Augments human data science expertise; navigates unstructured data while using multiple tools for insights\n- Visual processing: excelling at interpreting charts, graphs, and images, accurately transcribing text to derive insights beyond just the text alone\n- Agentic tasks: exceptional tool use, making it great at agentic tasks (i.e. complex, multi-step problem solving tasks that require engaging with other systems)\n\n#multimodal\n\n_This is a faster endpoint, made available in collaboration with Anthropic, that is self-moderated: response moderation happens on the provider's side instead of OpenRouter's. For requests that pass moderation, it's identical to the [Standard](/models/anthropic/claude-3.5-sonnet) variant._",
-            "id": "anthropic/claude-3.5-sonnet:beta",
-            "name": "Anthropic: Claude 3.5 Sonnet (self-moderated)",
+            "id": "anthropic/claude-3.5-sonnet",
+            "name": "Anthropic: Claude 3.5 Sonnet",
             "per_request_limits": null,
             "pricing": {
                 "completion": "0.000015",
@@ -945,8 +945,8 @@
             "context_length": 200000,
             "created": 1709596800,
             "description": "Claude 3 Opus is Anthropic's most powerful model for highly complex tasks. It boasts top-level performance, intelligence, fluency, and understanding.\n\nSee the launch announcement and benchmark results [here](https://www.anthropic.com/news/claude-3-family)\n\n#multimodal\n\n_This is a faster endpoint, made available in collaboration with Anthropic, that is self-moderated: response moderation happens on the provider's side instead of OpenRouter's. For requests that pass moderation, it's identical to the [Standard](/models/anthropic/claude-3-opus) variant._",
-            "id": "anthropic/claude-3-opus:beta",
-            "name": "Anthropic: Claude 3 Opus (self-moderated)",
+            "id": "anthropic/claude-3-opus",
+            "name": "Anthropic: Claude 3 Opus",
             "per_request_limits": null,
             "pricing": {
                 "completion": "0.000075",
