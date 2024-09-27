@@ -8,7 +8,7 @@ pkgs.mkShell {
     pkgs.python312    # Python 3.10 or your preferred version
     pkgs.python312Packages.flask  # Flask web framework
     pkgs.python312Packages.gunicorn  # Gunicorn WSGI server
-    pkgs.python312Packages.markdown
+    pkgs.python312Packages.requests
     pkgs.python312Packages.pip    # Python package manager
     pkgs.python312Packages.virtualenv  # Virtual environment tool
   ];
