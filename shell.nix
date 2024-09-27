@@ -40,11 +40,11 @@ pkgs.mkShell {
         git pull
         kill $(pgrep -f "gunicorn")
         sleep 10
-        gunicorn --bind 0.0.0.0:8000 wrapper:app &
+        gunicorn --bind 0.0.0.0:2500 wrapper:app &
         fi
     }
 
-    # Run Flask app with Gunicorn on localhost:8000
+    # Run Flask app with Gunicorn on localhost:2500
     gunicorn --bind 0.0.0.0:2500 wrapper:app &
 
     # Run the update check every 30 seconds
