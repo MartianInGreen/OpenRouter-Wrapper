@@ -2,6 +2,7 @@ import gzip
 from flask import Flask, request, Response, jsonify, stream_with_context
 import requests
 import json
+import time, uuid
 from urllib.parse import urljoin
 
 app = Flask(__name__)
@@ -41,13 +42,46 @@ def proxy(path):
 
     try: 
         msgs = json.loads(data)["messages"]
-        for msg in msgs: 
-            print(msg)
-            if msg["role"]:
-                if msg["content"].starswith("Available Tools:"):
-                    print("PASS")
-    except:
-        pass 
+        if json.loads(data)["model"] == "openai/gpt-4o-mini":
+            for msg in msgs: 
+                print(msg)
+                if msg["role"]:
+                    if msg["content"].starswith("Available Tools:"):
+                        # Get unix timestamp
+                        timestamp = time.time()
+                        id = str(uuid.uuid4().hex)[20:]
+
+                        CUSTOM_REPONSE={
+                            "id":f"gen-{timestamp}-la2CIxFcZy062cUrVpyw",
+                            "provider":"OpenAI",
+                            "model":"openai/gpt-4o-mini",
+                            "object":"chat.completion",
+                            "created": timestamp,
+                            "choices":[
+                                {
+                                    "logprobs":None,
+                                    "finish_reason":"stop",
+                                    "index":0,
+                                    "message":{
+                                        "role":"assistant",
+                                        "content":"```json\\n{}\\n```",
+                                        "refusal":""
+                                    }
+                                }
+                            ],
+                            "system_fingerprint":"fp_f85bea6784",
+                            "usage":{
+                                "prompt_tokens":490,
+                                "completion_tokens":5,
+                                "total_tokens":495
+                            }
+                        }
+                        resp = Response(json.dumps(CUSTOM_REPONSE), content_type='application/json')
+                        resp.headers['Content-Type'] = 'application/json'
+                        return resp
+    except Exception as e:
+        print("Error: " + str(e))
+        pass
 
     try:
         # Make the request to the OpenRouter API with the same method
