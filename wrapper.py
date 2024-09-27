@@ -65,7 +65,9 @@ def proxy(path):
         else:
             # For non-streaming responses, return the full content
             print("Non-streaming response")
-            return Response(resp.content, resp.status_code, dict(resp.headers))
+            response = Response(resp.content, resp.status_code, dict(resp.headers))
+            print(str(response))
+            return response
 
     except requests.exceptions.RequestException as e:
         # Handle exceptions (e.g., network errors)
