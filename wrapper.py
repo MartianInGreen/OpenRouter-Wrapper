@@ -28,6 +28,7 @@ def proxy(path):
 
     # Forward the data (for POST, PUT, PATCH requests)
     data = request.get_data()
+    print(str(data))
 
     try:
         # Make the request to the OpenRouter API with the same method
