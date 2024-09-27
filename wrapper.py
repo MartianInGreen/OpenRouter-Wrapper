@@ -53,7 +53,7 @@ def proxy(path):
         )
 
         # Check if the response should be streamed
-        if enable_streaing:
+        if enable_streaing == True:
             # Create a streaming response
             def generate():
                 for chunk in resp.iter_content(chunk_size=4096):
@@ -64,6 +64,7 @@ def proxy(path):
                             headers=dict(resp.headers))
         else:
             # For non-streaming responses, return the full content
+            print("Non-streaming response")
             return Response(resp.content, resp.status_code, dict(resp.headers))
 
     except requests.exceptions.RequestException as e:
