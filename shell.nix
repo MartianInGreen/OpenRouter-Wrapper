@@ -14,7 +14,7 @@ pkgs.mkShell {
   ];
 
   # Set up environment variables
-  FLASK_APP = "app.py";  # Path to your Flask application file
+  FLASK_APP = "wrapper.py";  # Path to your Flask application file
 
   shellHook = ''
     # Create virtual environment if it doesn't exist
