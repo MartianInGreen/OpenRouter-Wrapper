@@ -1,5 +1,6 @@
-from flask import Flask, request, Response, jsonify
-import requests, json
+from flask import Flask, request, Response, jsonify, stream_with_context
+import requests
+import json
 from urllib.parse import urljoin
 
 app = Flask(__name__)
@@ -40,11 +41,19 @@ def proxy(path):
             data=data,
             cookies=request.cookies,
             allow_redirects=False,
+            stream=True,  # Enable streaming
             timeout=120  # Adjust timeout as needed
         )
 
-        response = Response(resp.content, resp.status_code, headers)
-        return response
+        # Create a streaming response
+        def generate():
+            for chunk in resp.iter_content(chunk_size=4096):
+                yield chunk
+
+        # Return a streaming response
+        return Response(stream_with_context(generate()), 
+                        status=resp.status_code, 
+                        headers=dict(resp.headers))
 
     except requests.exceptions.RequestException as e:
         # Handle exceptions (e.g., network errors)
@@ -59,4 +68,3 @@ def index():
         "message": "OpenRouter API Wrapper is running.",
         "documentation": "Provide your API requests to /api/<path> endpoints."
     })
-
