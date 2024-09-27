@@ -46,7 +46,7 @@ def proxy(path):
             for msg in msgs: 
                 print(msg)
                 if msg["role"]:
-                    if msg["content"].starswith("Available Tools:"):
+                    if msg["content"].startswith("Available Tools:"):
                         # Get unix timestamp
                         timestamp = time.time()
                         id = str(uuid.uuid4().hex)[20:]
