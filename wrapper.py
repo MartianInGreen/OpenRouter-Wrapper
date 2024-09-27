@@ -31,6 +31,12 @@ def proxy(path):
     data = request.get_data()
     print(str(data))
 
+    try: 
+        enable_streaing = data["stream"]
+        print("Enable Streaming: " + enable_streaing)
+    except:
+        enable_streaing = False
+
     try:
         # Make the request to the OpenRouter API with the same method
         resp = requests.request(
@@ -41,12 +47,12 @@ def proxy(path):
             data=data,
             cookies=request.cookies,
             allow_redirects=False,
-            stream=True,  # Enable streaming
-            timeout=120  # Adjust timeout as needed
+            stream=enable_streaing,  # Enable streaming
+            timeout=200  # Adjust timeout as needed
         )
 
         # Check if the response should be streamed
-        if 'text/event-stream' in resp.headers.get('Content-Type', ''):
+        if enable_streaing:
             # Create a streaming response
             def generate():
                 for chunk in resp.iter_content(chunk_size=4096):
