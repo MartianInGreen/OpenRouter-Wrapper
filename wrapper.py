@@ -7,10 +7,6 @@ app = Flask(__name__)
 # Base URL of the OpenRouter API
 OPENROUTER_API_BASE = "https://openrouter.ai/api/"
 
-# Your OpenRouter API key (if required)
-# It's good practice to store this in environment variables or a config file
-OPENROUTER_API_KEY = "YOUR_OPENROUTER_API_KEY"  # Replace with your actual API key
-
 # Open Router API endpoint for models.json
 with open('models.json', 'r') as f:
     CUSTOM_MODELS_RESPONSE = json.load(f)
@@ -29,10 +25,6 @@ def proxy(path):
 
     # Forward the headers, excluding Host to avoid issues
     headers = {key: value for key, value in request.headers if key.lower() != 'host'}
-
-    # If the OpenRouter API requires an API key, include it in headers
-    # Adjust the header name based on OpenRouter's requirements (e.g., Authorization)
-    headers['Authorization'] = f"Bearer {OPENROUTER_API_KEY}"
 
     # Forward the data (for POST, PUT, PATCH requests)
     data = request.get_data()
