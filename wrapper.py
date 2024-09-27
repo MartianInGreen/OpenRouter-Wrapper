@@ -64,6 +64,3 @@ def index():
         "documentation": "Provide your API requests to /api/<path> endpoints."
     })
 
-if __name__ == '__main__':
-    # Run the app on port 5000 by default
-    app.run(host='0.0.0.0', port=2860, debug=False)
