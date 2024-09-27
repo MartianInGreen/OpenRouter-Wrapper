@@ -1,3 +1,4 @@
+import gzip
 from flask import Flask, request, Response, jsonify, stream_with_context
 import requests
 import json
@@ -48,8 +49,8 @@ def proxy(path):
             data=data,
             cookies=request.cookies,
             allow_redirects=False,
-            stream=enable_streaing,  # Enable streaming
-            timeout=200  # Adjust timeout as needed
+            stream=True,  # Enable streaming
+            timeout=120  # Adjust timeout as needed
         )
 
         # Check if the response should be streamed
@@ -63,11 +64,16 @@ def proxy(path):
                             status=resp.status_code, 
                             headers=dict(resp.headers))
         else:
-            # For non-streaming responses, return the full content
-            print("Non-streaming response")
-            response = Response(resp.content, resp.status_code, dict(resp.headers))
-            print(str(response))
-            return response
+            # For non-streaming responses, handle potential gzip encoding
+            content = resp.content
+            if 'gzip' in resp.headers.get('Content-Encoding', '').lower():
+                content = gzip.decompress(content)
+
+            # Remove the Content-Encoding header to prevent double decoding
+            headers = dict(resp.headers)
+            headers.pop('Content-Encoding', None)
+
+            return Response(content, resp.status_code, headers)
 
     except requests.exceptions.RequestException as e:
         # Handle exceptions (e.g., network errors)
