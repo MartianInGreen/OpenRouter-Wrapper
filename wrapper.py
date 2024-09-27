@@ -39,6 +39,15 @@ def proxy(path):
         print("Error: " + str(e))
         enable_streaing = False
 
+    try: 
+        msgs = json.loads(data)["messages"]
+        for msg in msgs: 
+            if msg["role"]:
+                if msg["content"].starswith("Available Tools:"):
+                    print("PASS")
+    except:
+        pass 
+
     try:
         # Make the request to the OpenRouter API with the same method
         resp = requests.request(
@@ -76,6 +85,8 @@ def proxy(path):
             # Remove the Content-Encoding header to prevent double decoding
             headers = dict(resp.headers)
             headers.pop('Content-Encoding', None)
+
+            print(content)
 
             return Response(content, resp.status_code, headers)
 
