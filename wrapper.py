@@ -45,15 +45,19 @@ def proxy(path):
             timeout=120  # Adjust timeout as needed
         )
 
-        # Create a streaming response
-        def generate():
-            for chunk in resp.iter_content(chunk_size=4096):
-                yield chunk
+        # Check if the response should be streamed
+        if 'text/event-stream' in resp.headers.get('Content-Type', ''):
+            # Create a streaming response
+            def generate():
+                for chunk in resp.iter_content(chunk_size=4096):
+                    yield chunk
 
-        # Return a streaming response
-        return Response(stream_with_context(generate()), 
-                        status=resp.status_code, 
-                        headers=dict(resp.headers))
+            return Response(stream_with_context(generate()), 
+                            status=resp.status_code, 
+                            headers=dict(resp.headers))
+        else:
+            # For non-streaming responses, return the full content
+            return Response(resp.content, resp.status_code, dict(resp.headers))
 
     except requests.exceptions.RequestException as e:
         # Handle exceptions (e.g., network errors)
