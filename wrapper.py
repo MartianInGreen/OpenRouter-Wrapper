@@ -32,7 +32,7 @@ def proxy(path):
     print(str(data))
 
     try: 
-        enable_streaing = data["stream"]
+        enable_streaing = json.dump(data)["stream"]
         print("Enable Streaming: " + enable_streaing)
     except:
         enable_streaing = False
