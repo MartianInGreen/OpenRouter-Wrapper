@@ -33,7 +33,7 @@ def proxy(path):
 
     try: 
         enable_streaing = json.loads(data)["stream"]
-        print("Enable Streaming: " + enable_streaing)
+        print("Enable Streaming: " + str(enable_streaing))
     except Exception as e:
         print("Error: " + str(e))
         enable_streaing = False
