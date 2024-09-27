@@ -42,6 +42,7 @@ def proxy(path):
     try: 
         msgs = json.loads(data)["messages"]
         for msg in msgs: 
+            print(msg)
             if msg["role"]:
                 if msg["content"].starswith("Available Tools:"):
                     print("PASS")
@@ -69,6 +70,8 @@ def proxy(path):
                 for chunk in resp.iter_content(chunk_size=4096):
                     yield chunk
 
+            print("----------- End of request -----------")
+
             return Response(stream_with_context(generate()), 
                             status=resp.status_code, 
                             headers=dict(resp.headers))
@@ -87,6 +90,7 @@ def proxy(path):
             headers.pop('Content-Encoding', None)
 
             print(content)
+            print("----------- End of request -----------")
 
             return Response(content, resp.status_code, headers)
 
