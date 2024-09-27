@@ -67,7 +67,11 @@ def proxy(path):
             # For non-streaming responses, handle potential gzip encoding
             content = resp.content
             if 'gzip' in resp.headers.get('Content-Encoding', '').lower():
-                content = gzip.decompress(content)
+                try:
+                    content = gzip.decompress(content)
+                except gzip.BadGzipFile:
+                    # Content is not actually gzipped, use it as-is
+                    pass
 
             # Remove the Content-Encoding header to prevent double decoding
             headers = dict(resp.headers)
