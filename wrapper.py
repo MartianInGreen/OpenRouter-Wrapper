@@ -89,11 +89,11 @@ def proxy(path):
 
     try:
         if loaded_data["model"] == "gemini-1-5-pro":
-            loaded_data["model"] == "google/gemini-pro-1.5"
+            loaded_data["model"] = "google/gemini-pro-1.5"
         elif loaded_data["model"] == "claude-3-5-sonnet":
-            loaded_data["model"] == "anthropic/claude-3.5-sonnet"
+            loaded_data["model"] = "anthropic/claude-3.5-sonnet"
         elif loaded_data["model"] == "llama-3-1-405b":
-            loaded_data["model"] == "meta-llama/llama-3.1-405b-instruct"
+            loaded_data["model"] = "meta-llama/llama-3.1-405b-instruct"
 
         print("Model is: " + loaded_data["model"])
         data = json.dumps(loaded_data).encode('utf-8')
@@ -140,6 +140,9 @@ def proxy(path):
             # Remove the Content-Encoding header to prevent double decoding
             headers = dict(resp.headers)
             headers.pop('Content-Encoding', None)
+
+            if resp.status_code != 200:
+                print("Error!: " + str(resp.status_code) + "\n Data: " + str(content))
 
             print(content)
             print("----------- End of request -----------")
