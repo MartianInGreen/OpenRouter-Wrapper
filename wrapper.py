@@ -96,7 +96,7 @@ def proxy(path):
             loaded_data["model"] == "meta-llama/llama-3.1-405b-instruct"
 
         print("Model is: " + loaded_data["model"])
-        data = json.dumps(loaded_data).endcode('utf-8')
+        data = json.dumps(loaded_data).encode('utf-8')
     except Exception as e:
         print("Error: " + str(e))
         pass
