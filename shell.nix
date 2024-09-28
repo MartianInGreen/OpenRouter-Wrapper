@@ -9,7 +9,7 @@ pkgs.mkShell {
     pkgs.python312Packages.flask  # Flask web framework
     pkgs.python312Packages.gunicorn  # Gunicorn WSGI server
     pkgs.python312Packages.requests
-    pkgs.python312Packages.gzip
+    #pkgs.python312Packages.gzip
     pkgs.python312Packages.pip    # Python package manager
     pkgs.python312Packages.virtualenv  # Virtual environment tool
   ];
