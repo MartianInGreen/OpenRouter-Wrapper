@@ -32,17 +32,21 @@ def proxy(path):
     # Forward the data (for POST, PUT, PATCH requests)
     data = request.get_data()
     print(str(data))
+    try:
+        loaded_data = json.loads(data)
+    except:
+        loaded_data = {}
 
     try: 
-        enable_streaing = json.loads(data)["stream"]
+        enable_streaing = loaded_data["stream"]
         print("Enable Streaming: " + str(enable_streaing))
     except Exception as e:
         print("Error: " + str(e))
         enable_streaing = False
 
     try: 
-        msgs = json.loads(data)["messages"]
-        if json.loads(data)["model"] == "openai/gpt-4o-mini":
+        msgs = loaded_data["messages"]
+        if loaded_data["model"] == "openai/gpt-4o-mini":
             for msg in msgs: 
                 print(msg)
                 if msg["role"]:
@@ -79,6 +83,20 @@ def proxy(path):
                         resp = Response(json.dumps(CUSTOM_REPONSE), content_type='application/json')
                         resp.headers['Content-Type'] = 'application/json'
                         return resp
+    except Exception as e:
+        print("Error: " + str(e))
+        pass
+
+    try:
+        if loaded_data["model"] == "gemini-1-5-pro":
+            loaded_data["model"] == "google/gemini-pro-1.5"
+        elif loaded_data["model"] == "claude-3-5-sonnet":
+            loaded_data["model"] == "anthropic/claude-3.5-sonnet"
+        elif loaded_data["model"] == "llama-3-1-405b":
+            loaded_data["model"] == "meta-llama/llama-3.1-405b-instruct"
+
+        print("Model is: " + loaded_data["model"])
+        data = json.dumps(loaded_data)
     except Exception as e:
         print("Error: " + str(e))
         pass
