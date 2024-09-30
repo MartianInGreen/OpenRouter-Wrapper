@@ -2,7 +2,7 @@ import gzip
 from flask import Flask, request, Response, jsonify, stream_with_context
 import requests
 import json
-import time, uuid
+import time, uuid, datetime
 from urllib.parse import urljoin
 
 app = Flask(__name__)
@@ -122,6 +122,8 @@ def proxy(path):
                 for chunk in resp.iter_content(chunk_size=4096):
                     yield chunk
 
+            # Print time like: YYYY-DD-MM HH:MM:SS
+            print(str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             print("----------- End of request -----------")
 
             return Response(stream_with_context(generate()), 
