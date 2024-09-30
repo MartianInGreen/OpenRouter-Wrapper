@@ -31,7 +31,8 @@ def proxy(path):
 
     # Forward the data (for POST, PUT, PATCH requests)
     data = request.get_data()
-    print(str(data))
+    #print(str(data))
+    print(len(str(data)))
     try:
         loaded_data = json.loads(data)
     except:
@@ -146,7 +147,8 @@ def proxy(path):
             if resp.status_code != 200:
                 print("Error!: " + str(resp.status_code) + "\n Data: " + str(content))
 
-            print(content)
+            #print(content)
+            print(str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             print("----------- End of request -----------")
 
             return Response(content, resp.status_code, headers)
